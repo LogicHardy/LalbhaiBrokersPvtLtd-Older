@@ -71,6 +71,7 @@
             android:layout_marginStart="30dp"
             android:background="@drawable/background_round_button"
             android:fontFamily="@font/abril_fatface"
+            android:onClick="downloadInvoiceMethod"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
             android:text="@string/download_invoice"

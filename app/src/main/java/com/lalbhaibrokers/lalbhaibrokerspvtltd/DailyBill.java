@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 public class DailyBill extends AppCompatActivity {
 
@@ -12,6 +13,12 @@ public class DailyBill extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_bill);
+    }
+
+    public void downloadBillMethod(View view) {
+
+        Toast.makeText(getApplicationContext(), "Downloading bill...", Toast.LENGTH_SHORT).show();
+
     }
 
 ////    when profile button is pressed

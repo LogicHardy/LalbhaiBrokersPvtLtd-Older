@@ -20,7 +20,8 @@
             android:layout_width="250dp"
             android:layout_height="150dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/img_logo_lalbhai" />
+            android:src="@drawable/img_logo_lalbhai"
+            android:contentDescription="@string/logo_image"/>
 
     </RelativeLayout>
 
@@ -111,7 +112,7 @@
                 android:id="@+id/forgot_password_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:fontFamily="@font/architects_daughter"
                 android:onClick="forgotPasswordMethod"
@@ -122,16 +123,20 @@
         </RelativeLayout>
 
         <!--        login button-->
-        <Button
+        <TextView
             android:id="@+id/login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
-            android:backgroundTint="@color/dim_light_blue"
+            android:background="@drawable/background_round_button"
             android:fontFamily="@font/abril_fatface"
             android:onClick="loginMethod"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
             android:text="@string/login"
-            android:textColor="@color/black" />
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="26sp" />
 
 <!--        layout for error message-->
         <RelativeLayout

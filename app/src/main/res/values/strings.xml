@@ -17,4 +17,7 @@
     <string name="dashboard_image">dashboard title background image</string>
     <string name="todays_bill_multiline">Today\'s\nBill</string>
     <string name="quarterly_invoice_multiline">Quarterly\nInvoice</string>
+    <string name="download_bill">Download Bill</string>
+    <string name="download_invoice">Download Invoice</string>
+    <string name="logo_image">Logo Image</string>
 </resources>

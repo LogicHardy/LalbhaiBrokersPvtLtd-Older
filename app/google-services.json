@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "156800335358",
+    "firebase_url": "https://lalbhai-brokers-pvt-ltd.firebaseio.com",
+    "project_id": "lalbhai-brokers-pvt-ltd",
+    "storage_bucket": "lalbhai-brokers-pvt-ltd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:156800335358:android:2568b1ea8e24dc291f94af",
+        "android_client_info": {
+          "package_name": "com.lalbhaibrokers.lalbhaibrokerspvtltd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "156800335358-01fift3jmra729bnm957hqkvt4c908n7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lalbhaibrokers.lalbhaibrokerspvtltd",
+            "certificate_hash": "aa975ae99f5c6a574ee6195d479e68ed23bff35d"
+          }
+        },
+        {
+          "client_id": "156800335358-oq8ml7cqskpi9s1t97m4i0udvfat5vgg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZjpJjkESf8H1b_qI7AmU92M1eiBOZIro"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "156800335358-oq8ml7cqskpi9s1t97m4i0udvfat5vgg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

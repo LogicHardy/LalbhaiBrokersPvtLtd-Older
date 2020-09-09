@@ -20,4 +20,6 @@
     <string name="download_bill">Download Bill</string>
     <string name="download_invoice">Download Invoice</string>
     <string name="logo_image">Logo Image</string>
+    <string name="send_otp">Send OTP</string>
+    <string name="verify_otp">Verify OTP</string>
 </resources>

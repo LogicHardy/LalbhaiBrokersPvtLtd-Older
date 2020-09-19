@@ -3,8 +3,10 @@ package com.lalbhaibrokers.lalbhaibrokerspvtltd;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +19,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.concurrent.TimeUnit;
 
@@ -31,8 +39,8 @@ public class LoginActivity extends AppCompatActivity {
     TextView forgotPassword, errorMessage, login, sendOtp, verifyOtp;
     String verificationCode;
     boolean isVerified;
-
-
+    FirebaseDatabase database;
+    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,31 +90,57 @@ public class LoginActivity extends AppCompatActivity {
     //method for start the OTP process
     public void sendOtp(View view){
 
+        database = FirebaseDatabase.getInstance();//connecting with realtime database
+        Log.d("myTag", "database "+database.toString());
+        reference = database.getReference("Users");//getting reference of User child
+        Log.d("myTag", "reference "+reference.toString());
 
+//        making queries
+        Query checkPhoneNo= reference.orderByChild("phoneNum").equalTo(mobileNumber.getText().toString());
+        Log.d("myTag", "checking for phone number "+mobileNumber.getText().toString());
 
+//        check if phone number exists
+        checkPhoneNo.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.child("Users").exists()){ // checking if data exists
+                    Log.d("myTag", "phoneNum"+snapshot.getChildrenCount());
+                    if(snapshot.getChildrenCount()==1){ //checking if same number is appearing twice in database
+                        for (DataSnapshot userId : snapshot.getChildren()) {
+                            if(userId.child("phoneNum").getValue(String.class).equals(mobileNumber.getText().toString())){
+                                String phoneNumCountryCode = "+91"+mobileNumber.getText().toString(); //we have to add country code in order to receive OTP
 
+                                //method that will send the OTP to given number
+                                PhoneAuthProvider.getInstance().verifyPhoneNumber( //sending message
+                                        phoneNumCountryCode,        // Phone number to verify
+                                        60,                 // Timeout duration
+                                        TimeUnit.SECONDS,   // Unit of timeout
+                                        TaskExecutors.MAIN_THREAD,    // Activity (for callback binding)
+                                        mCallbacks);        // OnVerificationStateChangedCallbacks
+                                Toast.makeText(context, "OTP send to "+phoneNumCountryCode, Toast.LENGTH_SHORT).show();
+                                sendOtp.setVisibility(View.GONE);
+                                verifyOtp.setVisibility(View.VISIBLE);
+                            }   else{
+                                errorMessage.setText("User not found 1!");
+                                errorMessage.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    }else{
+                        Log.d("myTag", "more then 1 user with same number, please check");
+                    }
+                }else{
+                    errorMessage.setText("User not found 2!");
+                    errorMessage.setVisibility(View.VISIBLE);
+                }
 
+            }
 
-        if(mobileNumber.getText().toString().equals("")){
-            errorMessage.setText("Please Enter phone number");
-            errorMessage.setVisibility(View.VISIBLE);
-        }else if(mobileNumber.getText().toString().length()!=10){
-            errorMessage.setText("Phone number is Invalid"); //we can only accept phoneNumbers with 10 digits
-            errorMessage.setVisibility(View.VISIBLE);
-        }else{
-            String phoneNum= "+91"+mobileNumber.getText().toString(); //we have to add country code in order to receive OTP
-
-            //method that will send the OTP to given number
-            PhoneAuthProvider.getInstance().verifyPhoneNumber( //sending message
-                    phoneNum,        // Phone number to verify
-                    60,                 // Timeout duration
-                    TimeUnit.SECONDS,   // Unit of timeout
-                    TaskExecutors.MAIN_THREAD,    // Activity (for callback binding)
-                    mCallbacks);        // OnVerificationStateChangedCallbacks
-            Toast.makeText(context, "OTP send to "+phoneNum, Toast.LENGTH_SHORT).show();
-            sendOtp.setVisibility(View.GONE);
-            verifyOtp.setVisibility(View.VISIBLE);
-        }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                errorMessage.setText("No stable connection! Please try again");
+                errorMessage.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     //method that verify the OTP received or not
